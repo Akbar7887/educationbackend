@@ -15,7 +15,9 @@ public class GroupEdu {
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="course_id", referencedColumnName = "id", foreignKey = @ForeignKey(name="course_id_fk"))
+    @JoinColumn(name="course_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name="course_id_fk"))
     @JsonBackReference
     private Course course;
 
