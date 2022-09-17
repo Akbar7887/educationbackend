@@ -10,12 +10,13 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", unique = true)
     private String name;
 
     public Region() {
     }
 
-    public Region(Long id, String name, String namelat) {
+    public Region(Long id, String name) {
         this.id = id;
         this.name = name;
     }
