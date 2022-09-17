@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.education.education.models.Course;
 import uz.education.education.models.Region;
+import uz.education.education.models.Subject;
 import uz.education.education.repository.CourseRepo;
 import uz.education.education.repository.RegionRepo;
+import uz.education.education.repository.SubjectRepo;
 import uz.education.education.service.RegionService;
 
 import javax.swing.text.html.parser.Parser;
@@ -26,17 +28,19 @@ class EducationApplicationTests {
     private RegionRepo regionRepo;
     @Autowired
     private CourseRepo courseRepo;
+    @Autowired
+    private SubjectRepo subjectRepo;
 
 
     @Test
     public void contextLoads() throws Exception {
 
-       // crat_region();
-      //  create_course()
+        // crat_region();
+        //  create_course()
     }
 
     @Test
-    void crat_region() {
+    void crat_region() throws Exception {
         List<String> list = new ArrayList<>();
         list.add("Тошкент ш.");
         list.add("Қорақалпоғистон\n" +
@@ -64,12 +68,26 @@ class EducationApplicationTests {
     }
 
     @Test
-    void create_course() {
+    void create_course() throws Exception {
 
         for (int i = 1; i <= 10; i++) {
             Course course = new Course();
             course.setLevel(String.valueOf(i));
             courseRepo.save(course);
         }
+    }
+
+    @Test
+    void create_subject() throws Exception {
+        String[] sub = new String[2];
+        sub[0] = "English";
+        sub[1] = "Математика";
+
+        for (String st : sub) {
+            Subject subject = new Subject();
+            subject.setName(st);
+            subjectRepo.save(subject);
+        }
+
     }
 }

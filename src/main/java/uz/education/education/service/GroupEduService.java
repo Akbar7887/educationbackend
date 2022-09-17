@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.education.education.models.Active;
+import uz.education.education.models.Course;
 import uz.education.education.models.GroupEdu;
+import uz.education.education.repository.CourseRepo;
 import uz.education.education.repository.GroupEduRepo;
 
 import java.util.List;
@@ -16,17 +18,37 @@ import java.util.Optional;
 public class GroupEduService {
 
     final GroupEduRepo groupEduRepo;
+    final CourseRepo courseRepo;
 
-    public GroupEdu save(GroupEdu groupEdu) {
-        return groupEduRepo.save(groupEdu);
+    public GroupEdu save(GroupEdu groupEdu, String id) {
+        Optional<Course> courseOptional = courseRepo.findById(Long.parseLong(id));
+
+        if (courseOptional.isPresent()) {
+            GroupEdu groupEdu1 = groupEduRepo.save(groupEdu);
+            Course course = courseOptional.get();
+            course.addGroup(groupEdu1);
+            courseRepo.save(course);
+
+            return groupEdu1;
+        } else {
+            return null;
+        }
     }
 
     public List<GroupEdu> getAllActive() {
         return groupEduRepo.getAllActive(Active.ACTIVE);
     }
 
-    public GroupEdu remove(GroupEdu groupEdu) {
+    public GroupEdu remove(String id) {
+        GroupEdu groupEdu = groupEduRepo.getById(Long.parseLong(id));
         groupEdu.setActive(Active.NOACTIVE);
+        Optional<Course> courseOptional = courseRepo.findById(groupEdu.getId());
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            course.removeGroup(groupEdu);
+            courseRepo.save(course);
+        }
+
         return groupEduRepo.save(groupEdu);
     }
 

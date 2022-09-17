@@ -7,5 +7,4 @@ import uz.education.education.models.Region;
 @Repository
 public interface RegionRepo extends CrudRepository<Region, Long> {
 
-
 }
