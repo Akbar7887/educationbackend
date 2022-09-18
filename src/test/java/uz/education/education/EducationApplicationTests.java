@@ -79,9 +79,12 @@ class EducationApplicationTests {
 
     @Test
     void create_subject() throws Exception {
-        String[] sub = new String[2];
-        sub[0] = "English";
-        sub[1] = "Математика";
+        String[] sub = new String[8];
+        sub[0] = "Физика";
+        sub[1] = "Рус тили";
+        sub[2] = "Тарих";
+        sub[3] = "Информатика";
+        sub[4] = "Биология";
 
         for (String st : sub) {
             Subject subject = new Subject();

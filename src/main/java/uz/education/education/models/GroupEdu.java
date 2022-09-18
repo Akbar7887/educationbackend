@@ -1,8 +1,11 @@
 package uz.education.education.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jdk.jfr.Timestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -26,17 +29,22 @@ public class GroupEdu {
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private Subject subject;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createdate;
+
     @Enumerated(EnumType.STRING)
     private Active active = Active.ACTIVE;
 
     public GroupEdu() {
     }
 
-    public GroupEdu(Long id, String name, Course course, Subject subject, Active active) {
+    public GroupEdu(Long id, String name, Course course, Subject subject, Date createdate, Active active) {
         this.id = id;
         this.name = name;
         this.course = course;
         this.subject = subject;
+        this.createdate = createdate;
         this.active = active;
     }
 
@@ -78,6 +86,15 @@ public class GroupEdu {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+
+    public Date getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(Date createdate) {
+        this.createdate = createdate;
     }
 
     @Override
