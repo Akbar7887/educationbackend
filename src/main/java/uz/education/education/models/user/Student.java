@@ -20,9 +20,9 @@ public class Student {
     private Long id;
 
     private String name;
-    private  String lastname;
+    private String lastname;
     private Date birthday;
-    private  String passportId;
+    private String passportId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
@@ -37,10 +37,10 @@ public class Student {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
-    Date exitdate;
+    private Date exitdate;
 
     @OneToMany
-    private Set<GroupEdu> groupEduSet = new HashSet<GroupEdu>();
+    private Set<GroupEdu> groupEduSet = new HashSet<>();
 
 
     @Enumerated(EnumType.STRING)
@@ -50,7 +50,17 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String name, String lastname, Date birthday, String passportId, Subject subject, Date createdate, Course course, Date exitdate, Set<GroupEdu> groupEduSet, Active active) {
+    public Student(Long id,
+                   String name,
+                   String lastname,
+                   Date birthday,
+                   String passportId,
+                   Subject subject,
+                   Date createdate,
+                   Course course,
+                   Date exitdate,
+                   Set<GroupEdu> groupEduSet,
+                   Active active) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
