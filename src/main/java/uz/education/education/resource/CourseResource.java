@@ -2,10 +2,7 @@ package uz.education.education.resource;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.education.education.models.Course;
 import uz.education.education.service.CourseService;
 
@@ -25,7 +22,7 @@ public class CourseResource {
     }
 
     @PostMapping("save")
-    public ResponseEntity<Course> save(Course course){
+    public ResponseEntity<Course> save(@RequestBody  Course course){
         return  ResponseEntity.ok().body(courseService.save(course));
     }
 

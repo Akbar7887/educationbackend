@@ -25,12 +25,12 @@ public class StudentResource {
     }
 
     @PostMapping("save")
-    private ResponseEntity<Student> save(Student student){
+    private ResponseEntity<Student> save(@RequestBody Student student){
         return ResponseEntity.ok().body(studentService.save(student));
     }
 
     @PutMapping("remove")
-    private ResponseEntity<Student> remove(String id){
+    private ResponseEntity<Student> remove(@RequestParam("id") String id){
         return ResponseEntity.ok().body(studentService.remove(id));
     }
 }
