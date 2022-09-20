@@ -21,7 +21,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
 //        config.addAllowedOrigin("https://admin.tascom.uz:8083");
-        config.addAllowedOrigin("http://localhost:52362");
+        config.addAllowedOrigin("http://localhost:48580");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

@@ -1,10 +1,7 @@
 package uz.education.education.models.user;
 
 import org.hibernate.annotations.CreationTimestamp;
-import uz.education.education.models.Active;
-import uz.education.education.models.Course;
-import uz.education.education.models.GroupEdu;
-import uz.education.education.models.Subject;
+import uz.education.education.models.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,6 +20,7 @@ public class Student {
     private String lastname;
     private Date birthday;
     private String passportId;
+    private String adress;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
@@ -37,6 +35,10 @@ public class Student {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
+    private Region region;
+
     private Date exitdate;
 
     @OneToMany
@@ -50,25 +52,17 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id,
-                   String name,
-                   String lastname,
-                   Date birthday,
-                   String passportId,
-                   Subject subject,
-                   Date createdate,
-                   Course course,
-                   Date exitdate,
-                   Set<GroupEdu> groupEduSet,
-                   Active active) {
+    public Student(Long id, String name, String lastname, Date birthday, String passportId, String adress, Subject subject, Date createdate, Course course, Region region, Date exitdate, Set<GroupEdu> groupEduSet, Active active) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
         this.birthday = birthday;
         this.passportId = passportId;
+        this.adress = adress;
         this.subject = subject;
         this.createdate = createdate;
         this.course = course;
+        this.region = region;
         this.exitdate = exitdate;
         this.groupEduSet = groupEduSet;
         this.active = active;
@@ -160,5 +154,21 @@ public class Student {
 
     public void setActive(Active active) {
         this.active = active;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 }
