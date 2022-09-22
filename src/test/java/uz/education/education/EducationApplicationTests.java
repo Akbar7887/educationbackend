@@ -1,6 +1,5 @@
 package uz.education.education;
 
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +7,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.education.education.models.Course;
-import uz.education.education.models.GroupEdu;
 import uz.education.education.models.Region;
 import uz.education.education.models.Subject;
 import uz.education.education.models.user.Student;
 import uz.education.education.repository.*;
-import uz.education.education.service.RegionService;
 
-import javax.swing.text.html.parser.Parser;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -107,12 +102,11 @@ class EducationApplicationTests {
 
         Student student = new Student();
         student.setName("Akbar");
-        student.setLastname("Dadashev");
+//        student.setLastname("Dadashev");
         student.setBirthday(new Date());
         student.setPassportId("AA8794897");
-        student.setSubject(subjectRepo.findById(2L).get());
-        student.setCourse(courseRepo.findById(3L).get());
-        student.setGroupEduSet(Set.of(groupEduRepo.findById(4L).get()));
+//        student.setSubject(subjectRepo.findById(2L).get());
+//        student.setGroupEduSet(Set.of(groupEduRepo.findById(4L).get()));
 
         studentRepo.save(student);
 
