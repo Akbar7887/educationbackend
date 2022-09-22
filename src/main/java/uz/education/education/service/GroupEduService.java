@@ -24,6 +24,7 @@ public class GroupEduService {
         Optional<Course> courseOptional = courseRepo.findById(Long.parseLong(id));
 
         if (courseOptional.isPresent()) {
+            groupEdu.setCourse(courseOptional.get());
             GroupEdu groupEdu1 = groupEduRepo.save(groupEdu);
             Course course = courseOptional.get();
             course.addGroup(groupEdu1);

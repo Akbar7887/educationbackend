@@ -23,14 +23,14 @@ public class GroupEduResource {
         return ResponseEntity.ok().body(groupEduService.getAllActive());
     }
 
-    @PostMapping("save")
+    @PostMapping("saveid")
     private ResponseEntity<GroupEdu> save(@RequestBody GroupEdu groupEdu,
                           @RequestParam("course_id") String id) {
         return  ResponseEntity.ok().body(groupEduService.save(groupEdu, id));
     }
 
     @PutMapping("remove")
-    private ResponseEntity<GroupEdu> remove(@RequestParam("groupedu_id") String id) {
+    private ResponseEntity<GroupEdu> remove(@RequestParam("id") String id) {
         return ResponseEntity.ok().body(groupEduService.remove(id));
     }
 

@@ -3,7 +3,9 @@ package uz.education.education.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -59,10 +61,19 @@ public class Course {
     }
 
     public Set<GroupEdu> getGroupSet() {
+        List<GroupEdu> removelist = new ArrayList<GroupEdu>();
+        for(GroupEdu groupEdu: groupSet){
+
+            if(groupEdu.getActive().equals(Active.NOACTIVE)){
+                removelist.add(groupEdu);
+            }
+        }
+        groupSet.removeAll(removelist);
         return groupSet;
     }
 
     public void setGroupSet(Set<GroupEdu> groupSet) {
+
         this.groupSet = groupSet;
     }
 }

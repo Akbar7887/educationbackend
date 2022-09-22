@@ -40,12 +40,12 @@ public class GroupEdu {
     }
 
     public GroupEdu(Long id, String name, Course course, Subject subject, Date createdate, Active active) {
-        this.id = id;
-        this.name = name;
-        this.course = course;
-        this.subject = subject;
-        this.createdate = createdate;
-        this.active = active;
+            this.id = id;
+            this.name = name;
+            this.course = course;
+            this.subject = subject;
+            this.createdate = createdate;
+            this.active = active;
     }
 
     public Long getId() {
