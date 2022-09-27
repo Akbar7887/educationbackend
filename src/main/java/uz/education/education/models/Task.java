@@ -27,6 +27,12 @@ public class Task {
     private boolean ans_D;
     private boolean ans_E;
 
+    private String ans_A_name;
+    private String ans_B_name;
+    private String ans_C_name;
+    private String ans_D_name;
+    private String ans_E_name;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "level_id",
             referencedColumnName = "level_id",
