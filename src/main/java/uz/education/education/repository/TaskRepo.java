@@ -14,4 +14,13 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
 
     @Query("select t from Task t where t.active=:active")
     List<Task> getAllActive(@Param("active") Active active);
+
+    @Query("select t from Task t where t.level.level_id=:id and t.active=:active")
+    List<Task> findByLevelId(@Param("id") long id, @Param("active") Active active);
+
+    @Query("select t from Task t where t.active=:active and t.show=:show")
+    List<Task> findActiveShow(@Param("active") Active active, @Param("show") boolean show);
+
+
+
 }

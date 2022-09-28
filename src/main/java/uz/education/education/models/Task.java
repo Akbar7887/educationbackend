@@ -33,6 +33,9 @@ public class Task {
     private String ans_D_name;
     private String ans_E_name;
 
+    @Column(nullable = false)
+    private Boolean show = true;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "level_id",
             referencedColumnName = "level_id",

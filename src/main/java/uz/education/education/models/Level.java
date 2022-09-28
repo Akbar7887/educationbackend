@@ -34,7 +34,10 @@ public class Level {
             foreignKey = @ForeignKey(name = "subject_id_fx"))
     private Subject subject;
 
-    @OneToMany(mappedBy = "level", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "level",
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.MERGE})
     @JsonManagedReference
     private List<Task> taskList = new ArrayList<>();
 

@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uz.education.education.models.Course;
+import uz.education.education.models.Level;
 import uz.education.education.models.Region;
 import uz.education.education.models.Subject;
 import uz.education.education.models.user.Student;
@@ -31,6 +32,8 @@ class EducationApplicationTests {
     private StudentRepo studentRepo;
     @Autowired
     private GroupEduRepo groupEduRepo;
+    @Autowired
+    private LevelRepo levelRepo;
 
 
     @Test
@@ -109,6 +112,21 @@ class EducationApplicationTests {
 //        student.setGroupEduSet(Set.of(groupEduRepo.findById(4L).get()));
 
         studentRepo.save(student);
+
+
+    }
+
+    @Test
+    void clearLevelFromTask() throws Exception {
+
+        List<Level> levels = levelRepo.findAll();
+
+        for (Level level : levels){
+
+            level.setTaskList(new ArrayList<>());
+            levelRepo.save(level);
+        }
+
 
 
     }

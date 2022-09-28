@@ -22,6 +22,10 @@ public class TaskService {
         return taskRepo.getAllActive(Active.ACTIVE);
     }
 
+    public List<Task> getByLevel(String id) {
+        return taskRepo.findByLevelId(Long.parseLong(id), Active.ACTIVE);
+    }
+
     public Task save(Task task, String levelid) {
         Optional<Level> levelOptional = levelRepo.findById(Long.parseLong(levelid));
 
@@ -39,11 +43,26 @@ public class TaskService {
 
     public Task remove(String id) {
         Optional<Task> taskOptional = taskRepo.findById(Long.parseLong(id));
-        if (taskOptional.isPresent()) {
+        if (!taskOptional.isPresent()) {
             return null;
         }
         Task task = taskOptional.get();
         task.setActive(Active.NOACTIVE);
         return taskRepo.save(task);
+    }
+
+    public List<Task> getActiveShow(boolean show) {
+        return taskRepo.findActiveShow(Active.ACTIVE, show);
+    }
+
+    public Boolean saveShow(String id, boolean show) {
+            Optional<Task> taskOptional = taskRepo.findById(Long.parseLong(id));
+            if (taskOptional.isEmpty()) {
+               return false;
+            }
+            Task task = taskOptional.get();
+            task.setShow(show);
+            taskRepo.save(task);
+        return true;
     }
 }
