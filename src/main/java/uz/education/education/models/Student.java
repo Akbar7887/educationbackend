@@ -1,13 +1,15 @@
-package uz.education.education.models.user;
+package uz.education.education.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import uz.education.education.models.Active;
-import uz.education.education.models.Course;
-import uz.education.education.models.GroupEdu;
-import uz.education.education.models.Region;
+import uz.education.education.models.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table
@@ -37,10 +39,13 @@ public class Student {
 
     private Date exitdate;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    private GroupEdu groupEdu;
+    @OneToMany(
+            mappedBy = "student",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Registration> registrations = new HashSet<>();
 
 
     @Enumerated(EnumType.STRING)
@@ -50,7 +55,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String name, Date birthday, String passportId, String adress, Date createdate, Course course, Region region, Date exitdate, GroupEdu groupEdu, Active active) {
+    public Student(Long id, String name, Date birthday, String passportId, String adress, Date createdate, Course course, Region region, Date exitdate, Set<Registration> registrations, Active active) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -60,8 +65,22 @@ public class Student {
         this.course = course;
         this.region = region;
         this.exitdate = exitdate;
-        this.groupEdu = groupEdu;
+        this.registrations = registrations;
         this.active = active;
+    }
+
+    public void addRegistration(Registration registration) {
+        if (!this.registrations.contains(registration)) {
+            this.registrations.add(registration);
+            registration.setStudent(this);
+        }
+    }
+
+    public void removeRegistration(Registration registration) {
+        if (this.registrations.contains(registration)) {
+            this.registrations.remove(registration);
+            registration.setStudent(null);
+        }
     }
 
     public Long getId() {
@@ -96,6 +115,14 @@ public class Student {
         this.passportId = passportId;
     }
 
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
     public Date getCreatedate() {
         return createdate;
     }
@@ -112,6 +139,14 @@ public class Student {
         this.course = course;
     }
 
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
     public Date getExitdate() {
         return exitdate;
     }
@@ -120,12 +155,12 @@ public class Student {
         this.exitdate = exitdate;
     }
 
-    public GroupEdu getGroupEdu() {
-        return groupEdu;
+    public Set<Registration> getRegistrations() {
+        return registrations;
     }
 
-    public void setGroupEdu(GroupEdu groupEdu) {
-        this.groupEdu = groupEdu;
+    public void setRegistrations(Set<Registration> registrations) {
+        this.registrations = registrations;
     }
 
     public Active getActive() {
@@ -134,21 +169,5 @@ public class Student {
 
     public void setActive(Active active) {
         this.active = active;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
     }
 }

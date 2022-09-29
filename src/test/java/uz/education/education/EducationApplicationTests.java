@@ -6,16 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import uz.education.education.models.Course;
-import uz.education.education.models.Level;
-import uz.education.education.models.Region;
-import uz.education.education.models.Subject;
-import uz.education.education.models.user.Student;
+import uz.education.education.models.*;
+import uz.education.education.models.Student;
 import uz.education.education.repository.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -100,19 +95,35 @@ class EducationApplicationTests {
 
 
     @Test
-    void create_student() throws Exception {
+    void createstudent() throws Exception {
+
+//        GroupEdu groupEdu = groupEduRepo.findById(1L).get();
+//        GroupEdu groupEdu1 = groupEduRepo.findById(2L).get();
+//
+//        groupEdu.setRegistrations(null);
+//        groupEduRepo.save(groupEdu);
+//
+//
+//        groupEdu1.setRegistrations(null);
+//        groupEduRepo.save(groupEdu1);
 
 
-        Student student = new Student();
-        student.setName("Akbar");
-//        student.setLastname("Dadashev");
-        student.setBirthday(new Date());
-        student.setPassportId("AA8794897");
-//        student.setSubject(subjectRepo.findById(2L).get());
-//        student.setGroupEduSet(Set.of(groupEduRepo.findById(4L).get()));
+        Student student = studentRepo.findById(17L).get();
 
-        studentRepo.save(student);
+//        student.setRegistrations(null);
+//        studentRepo.save(student);
 
+
+//        GroupEdu groupEdu = groupEduRepo.findById(1L).get();
+        // GroupEdu groupEdu1 = groupEduRepo.findById(2L).get();
+
+//        Registration registration = new Registration();
+//        registration.setGroupEdu(groupEdu);
+//        registration.setStudent(student);
+//
+//        student.addRegistration(registration);
+//
+//        studentRepo.save(student);
 
     }
 
@@ -121,12 +132,11 @@ class EducationApplicationTests {
 
         List<Level> levels = levelRepo.findAll();
 
-        for (Level level : levels){
+        for (Level level : levels) {
 
             level.setTaskList(new ArrayList<>());
             levelRepo.save(level);
         }
-
 
 
     }

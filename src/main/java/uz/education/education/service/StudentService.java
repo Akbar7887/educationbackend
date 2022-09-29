@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.education.education.models.Active;
-import uz.education.education.models.user.Student;
+import uz.education.education.models.Student;
 import uz.education.education.repository.StudentRepo;
 
 import java.util.List;

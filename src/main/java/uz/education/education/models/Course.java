@@ -18,7 +18,9 @@ public class Course {
 
     String level;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<GroupEdu> groupSet = new HashSet<>();
 
@@ -31,14 +33,15 @@ public class Course {
         this.groupSet = groupSet;
     }
 
-    public void addGroup(GroupEdu newgroup){
-        if(!this.groupSet.contains(newgroup)){
+    public void addGroup(GroupEdu newgroup) {
+        if (!this.groupSet.contains(newgroup)) {
             this.groupSet.add(newgroup);
             newgroup.setCourse(this);
         }
     }
-    public void removeGroup(GroupEdu newgroup){
-        if(this.groupSet.contains(newgroup)){
+
+    public void removeGroup(GroupEdu newgroup) {
+        if (this.groupSet.contains(newgroup)) {
             this.groupSet.remove(newgroup);
             newgroup.setCourse(null);
         }
@@ -62,9 +65,9 @@ public class Course {
 
     public Set<GroupEdu> getGroupSet() {
         List<GroupEdu> removelist = new ArrayList<GroupEdu>();
-        for(GroupEdu groupEdu: groupSet){
+        for (GroupEdu groupEdu : groupSet) {
 
-            if(groupEdu.getActive().equals(Active.NOACTIVE)){
+            if (groupEdu.getActive().equals(Active.NOACTIVE)) {
                 removelist.add(groupEdu);
             }
         }

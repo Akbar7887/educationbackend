@@ -1,12 +1,14 @@
 package uz.education.education.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jdk.jfr.Timestamp;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table
@@ -18,7 +20,7 @@ public class GroupEdu {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id",
             referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "course_id_fk"))
@@ -33,19 +35,42 @@ public class GroupEdu {
     @CreationTimestamp
     private Date createdate;
 
+    @OneToMany(mappedBy = "groupEdu",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Registration> registrations = new HashSet<>();
+
+
     @Enumerated(EnumType.STRING)
     private Active active = Active.ACTIVE;
+
+
+    public void addRegistration(Registration registration) {
+        if (!this.registrations.contains(registration)) {
+            this.registrations.add(registration);
+            registration.setGroupEdu(this);
+        }
+    }
+
+    public void removeRegistration(Registration registration) {
+        if (this.registrations.contains(registration)) {
+            this.registrations.remove(registration);
+            registration.setGroupEdu(null);
+        }
+    }
 
     public GroupEdu() {
     }
 
-    public GroupEdu(Long id, String name, Course course, Subject subject, Date createdate, Active active) {
-            this.id = id;
-            this.name = name;
-            this.course = course;
-            this.subject = subject;
-            this.createdate = createdate;
-            this.active = active;
+    public GroupEdu(Long id, String name, Course course, Subject subject, Date createdate, Set<Registration> registrations, Active active) {
+        this.id = id;
+        this.name = name;
+        this.course = course;
+        this.subject = subject;
+        this.createdate = createdate;
+        this.registrations = registrations;
+        this.active = active;
     }
 
     public Long getId() {
@@ -72,14 +97,6 @@ public class GroupEdu {
         this.course = course;
     }
 
-    public Active getActive() {
-        return active;
-    }
-
-    public void setActive(Active active) {
-        this.active = active;
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -87,7 +104,6 @@ public class GroupEdu {
     public void setSubject(Subject subject) {
         this.subject = subject;
     }
-
 
     public Date getCreatedate() {
         return createdate;
@@ -97,27 +113,32 @@ public class GroupEdu {
         this.createdate = createdate;
     }
 
+    public Set<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(Set<Registration> registrations) {
+        this.registrations = registrations;
+    }
+
+    public Active getActive() {
+        return active;
+    }
+
+    public void setActive(Active active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof GroupEdu)) return false;
         GroupEdu groupEdu = (GroupEdu) o;
-        return Objects.equals(getId(), groupEdu.getId()) && Objects.equals(getName(), groupEdu.getName()) && Objects.equals(getCourse(), groupEdu.getCourse()) && Objects.equals(getSubject(), groupEdu.getSubject()) && getActive() == groupEdu.getActive();
+        return Objects.equals(getId(), groupEdu.getId()) && Objects.equals(getName(), groupEdu.getName()) && Objects.equals(getCourse(), groupEdu.getCourse()) && Objects.equals(getSubject(), groupEdu.getSubject()) && Objects.equals(getCreatedate(), groupEdu.getCreatedate()) && Objects.equals(getRegistrations(), groupEdu.getRegistrations()) && getActive() == groupEdu.getActive();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getCourse(), getSubject(), getActive());
-    }
-
-    @Override
-    public String toString() {
-        return "GroupEdu{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", course=" + course +
-                ", subject=" + subject +
-                ", active=" + active +
-                '}';
+        return Objects.hash(getId(), getName(), getCourse(), getSubject(), getCreatedate(), getRegistrations(), getActive());
     }
 }
