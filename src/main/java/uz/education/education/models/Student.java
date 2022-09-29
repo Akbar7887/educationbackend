@@ -9,11 +9,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import uz.education.education.models.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table
-public class Student {
+public class Student implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,10 +43,10 @@ public class Student {
     @OneToMany(
             mappedBy = "student",
             fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            cascade = CascadeType.ALL
     )
-    private Set<Registration> registrations = new HashSet<>();
+    @JsonManagedReference
+    private List<Registration> registrations = new ArrayList<>();
 
 
     @Enumerated(EnumType.STRING)
@@ -55,7 +56,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(Long id, String name, Date birthday, String passportId, String adress, Date createdate, Course course, Region region, Date exitdate, Set<Registration> registrations, Active active) {
+    public Student(Long id, String name, Date birthday, String passportId, String adress, Date createdate, Course course, Region region, Date exitdate, List<Registration> registrations, Active active) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -155,19 +156,19 @@ public class Student {
         this.exitdate = exitdate;
     }
 
-    public Set<Registration> getRegistrations() {
-        return registrations;
-    }
-
-    public void setRegistrations(Set<Registration> registrations) {
-        this.registrations = registrations;
-    }
-
     public Active getActive() {
         return active;
     }
 
     public void setActive(Active active) {
         this.active = active;
+    }
+
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
     }
 }

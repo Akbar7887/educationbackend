@@ -1,6 +1,7 @@
 package uz.education.education.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.education.education.models.Active;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Transactional
 public class StudentService {
 
+    @Autowired
     final StudentRepo studentRepo;
 
     public List<Student> getAllActive() {

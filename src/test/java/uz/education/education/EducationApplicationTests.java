@@ -114,16 +114,18 @@ class EducationApplicationTests {
 //        studentRepo.save(student);
 
 
-//        GroupEdu groupEdu = groupEduRepo.findById(1L).get();
-        // GroupEdu groupEdu1 = groupEduRepo.findById(2L).get();
+        GroupEdu groupEdu = groupEduRepo.findById(2L).get();
+//         GroupEdu groupEdu1 = groupEduRepo.findById(2L).get();
 
-//        Registration registration = new Registration();
-//        registration.setGroupEdu(groupEdu);
-//        registration.setStudent(student);
-//
-//        student.addRegistration(registration);
-//
-//        studentRepo.save(student);
+        Registration registration = new Registration();
+        registration.setGroupEdu(groupEdu);
+        registration.setStudent(student);
+
+        student.addRegistration(registration);
+
+        groupEdu.addRegistration(registration);
+
+        studentRepo.save(student);
 
     }
 

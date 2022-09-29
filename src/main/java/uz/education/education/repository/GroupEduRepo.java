@@ -13,7 +13,7 @@ import java.util.List;
 public interface GroupEduRepo extends JpaRepository<GroupEdu, Long> {
 
     @Query("select g from GroupEdu g where g.active=:active")
-    List<GroupEdu> getAllActive(@Param("active")Active active);
+    List<GroupEdu> getAllActive(@Param("active") Active active);
 
     GroupEdu getById(Long id);
 

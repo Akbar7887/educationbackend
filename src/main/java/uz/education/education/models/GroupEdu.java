@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table
-public class GroupEdu {
+public class GroupEdu implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +40,7 @@ public class GroupEdu {
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JsonManagedReference
-    private Set<Registration> registrations = new HashSet<>();
+    private List<Registration> registrations = new ArrayList<>();
 
 
     @Enumerated(EnumType.STRING)
@@ -63,7 +64,7 @@ public class GroupEdu {
     public GroupEdu() {
     }
 
-    public GroupEdu(Long id, String name, Course course, Subject subject, Date createdate, Set<Registration> registrations, Active active) {
+    public GroupEdu(Long id, String name, Course course, Subject subject, Date createdate, List<Registration> registrations, Active active) {
         this.id = id;
         this.name = name;
         this.course = course;
@@ -113,11 +114,11 @@ public class GroupEdu {
         this.createdate = createdate;
     }
 
-    public Set<Registration> getRegistrations() {
+    public List<Registration> getRegistrations() {
         return registrations;
     }
 
-    public void setRegistrations(Set<Registration> registrations) {
+    public void setRegistrations(List<Registration> registrations) {
         this.registrations = registrations;
     }
 

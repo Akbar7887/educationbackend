@@ -1,32 +1,37 @@
 package uz.education.education.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JoinFormula;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table
-public class Registration {
+public class Registration implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
-    @JsonBackReference
+    @JsonIgnore
+//    @JsonBackReference
     private Student student;
 
-    @ManyToOne(fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id")
-    @JsonBackReference
+    @JsonIgnore
+//    @JsonBackReference
     private GroupEdu groupEdu;
 
     @Temporal(TemporalType.TIMESTAMP)
