@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import uz.education.education.models.Active;
 import uz.education.education.models.Course;
 import uz.education.education.models.GroupEdu;
+import uz.education.education.models.Student;
 import uz.education.education.repository.CourseRepo;
 import uz.education.education.repository.GroupEduRepo;
+import uz.education.education.repository.StudentRepo;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,15 +20,15 @@ import java.util.Optional;
 @Transactional
 public class GroupEduService {
 
-    @Autowired
-    final GroupEduRepo groupEduRepo;
-    final CourseRepo courseRepo;
+    private final GroupEduRepo groupEduRepo;
+    private final CourseRepo courseRepo;
+    private final StudentRepo studentRepo;
 
     public GroupEdu save(GroupEdu groupEdu, String id) {
         Optional<Course> courseOptional = courseRepo.findById(Long.parseLong(id));
 
         if (courseOptional.isPresent()) {
-            groupEdu.setCourse(courseOptional.get());
+//            groupEdu.setCourse(courseOptional.get());
             GroupEdu groupEdu1 = groupEduRepo.save(groupEdu);
             Course course = courseOptional.get();
             course.addGroup(groupEdu1);
@@ -36,6 +38,22 @@ public class GroupEduService {
         } else {
             return null;
         }
+    }
+
+    public GroupEdu addStudent(String group_id, String student_id) {
+        Optional<GroupEdu> groupEduOptional = groupEduRepo.findById(Long.parseLong(group_id));
+        Optional<Student> studentOptional = studentRepo.findById(Long.parseLong(student_id));
+        if (!groupEduOptional.isPresent()
+                || !studentOptional.isPresent()) {
+            return null;
+        }
+
+        GroupEdu groupEdu = groupEduOptional.get();
+        Student student = studentOptional.get();
+        groupEdu.getStudents().add(student);
+
+        return groupEduRepo.save(groupEdu);
+
     }
 
     public List<GroupEdu> getAllActive() {
@@ -64,5 +82,23 @@ public class GroupEduService {
         } else {
             return null;
         }
+    }
+
+    public GroupEdu removeStudent(String group_id, String student_id) {
+        Optional<GroupEdu> groupEduOptional = groupEduRepo.findById(Long.parseLong(group_id));
+        Optional<Student> studentOptional = studentRepo.findById(Long.parseLong(student_id));
+        if (!groupEduOptional.isPresent()
+                || !studentOptional.isPresent()) {
+            return null;
+        }
+
+        GroupEdu groupEdu = groupEduOptional.get();
+        Student student = studentOptional.get();
+        if (groupEdu.getStudents().contains(student)) {
+            groupEdu.getStudents().remove(student);
+        }
+
+        return groupEduRepo.save(groupEdu);
+
     }
 }

@@ -12,4 +12,5 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
 
     @Query("select s from Student s where s.active =:active")
     List<Student> findAll(@Param("active") Active active);
+
 }

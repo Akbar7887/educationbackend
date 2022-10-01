@@ -97,36 +97,12 @@ class EducationApplicationTests {
     @Test
     void createstudent() throws Exception {
 
-//        GroupEdu groupEdu = groupEduRepo.findById(1L).get();
-//        GroupEdu groupEdu1 = groupEduRepo.findById(2L).get();
-//
-//        groupEdu.setRegistrations(null);
-//        groupEduRepo.save(groupEdu);
-//
-//
-//        groupEdu1.setRegistrations(null);
-//        groupEduRepo.save(groupEdu1);
+          GroupEdu groupEdu = groupEduRepo.findById(1L).get();
+        Student student = studentRepo.findById(2L).get();
+        Student student1 = studentRepo.findById(3L).get();
+          groupEdu.setStudents(Set.of(student, student1));
 
-
-        Student student = studentRepo.findById(17L).get();
-
-//        student.setRegistrations(null);
-//        studentRepo.save(student);
-
-
-        GroupEdu groupEdu = groupEduRepo.findById(2L).get();
-//         GroupEdu groupEdu1 = groupEduRepo.findById(2L).get();
-
-        Registration registration = new Registration();
-        registration.setGroupEdu(groupEdu);
-        registration.setStudent(student);
-
-        student.addRegistration(registration);
-
-        groupEdu.addRegistration(registration);
-
-        studentRepo.save(student);
-
+          groupEduRepo.save(groupEdu);
     }
 
     @Test
